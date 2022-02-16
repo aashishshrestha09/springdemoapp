@@ -1,10 +1,12 @@
 // CODE_CHANGES = getGitChanges()
+def gv 
+
 pipeline {
   agent any
   parameters {
     // string(name: 'VERSION', defaultValue: '', descrption: 'version to deploy on prod')
-    choice(name: 'VERSION', choices: ['1.1.0', '1.2.0'], description: '')
-    booleanParam(name: 'executeTests', defaultValue: true, description: '')
+    choice(name: 'VERSION', choices: ['1.1.0', '1.2.0'], descrption: '')
+    booleanParam(name: 'executeTests', defaultValue: true, descrption: '')
   }
 
   environment {
@@ -15,6 +17,13 @@ pipeline {
     maven 'Maven-3.8.4'
   }
   stages {
+    stage("init") {
+      steps {
+        script {
+          gv = load "script.groovy"
+        }
+      }
+    }
     stage("build") {
       // when {
       //   expression {
@@ -22,8 +31,9 @@ pipeline {
       //   }
       // }
       steps {
-        echo 'building the application...'
-        echo "building version ${NEW_VERSION}"
+        script {
+          gv.buildApp()
+        }
       }
     }
     stage("test") {
