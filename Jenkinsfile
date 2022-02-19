@@ -34,6 +34,7 @@ pipeline {
         script {
           gv.buildApp()
           sh "docker version"
+          sh "docker-compose version"
         }
       }
     }
