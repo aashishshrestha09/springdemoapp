@@ -33,6 +33,7 @@ pipeline {
       steps {
         script {
           gv.buildApp()
+          sh "docker version"
         }
       }
     }
@@ -49,6 +50,7 @@ pipeline {
       }
       steps {
         echo 'testing the application...'
+        
       }
     }
     stage("deploy") {
