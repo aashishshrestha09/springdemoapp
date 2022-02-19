@@ -33,8 +33,7 @@ pipeline {
       steps {
         script {
           gv.buildApp()
-          sh "docker version"
-          sh "docker-compose version"
+          sh "mvn clean install -DskipTests=true"
         }
       }
     }
@@ -51,7 +50,7 @@ pipeline {
       }
       steps {
         echo 'testing the application...'
-        
+        sh "mvn test"        
       }
     }
     stage("deploy") {
